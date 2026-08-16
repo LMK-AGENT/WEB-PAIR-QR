@@ -1,0 +1,19 @@
+{
+  "name": "lmk-md-pairing-site",
+  "version": "2.0.0",
+  "description": "LMK-MD WhatsApp pairing service with QR and pairing-code authentication.",
+  "main": "arslan.js",
+  "scripts": {
+    "start": "node arslan.js",
+    "dev": "node --watch arslan.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.24",
+    "express": "^5.1.0",
+    "pino": "^9.7.0",
+    "qrcode": "^1.5.4"
+  }
+}

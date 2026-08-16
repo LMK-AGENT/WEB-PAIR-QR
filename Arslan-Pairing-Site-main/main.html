@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>LMK-MD Sessions | Ultra Pro Max</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --neon-cyan: #00ffcc;
+      --neon-pink: #ff2e63;
+      --neon-purple: #7209b7;
+      --neon-blue: #4361ee;
+      --dark-bg: #0a0a0a;
+      --card-bg: rgba(15, 15, 25, 0.8);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark-bg);
+      color: var(--neon-cyan);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Advanced Particle Background */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: radial-gradient(ellipse at center, #0a0a1a 0%, #000000 100%);
+    }
+
+    /* Animated Grid Overlay */
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: 
+        linear-gradient(rgba(0, 255, 204, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 204, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 40s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-50px, -50px); }
+    }
+
+    /* 3D Profile Section */
+    .profile-section {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0 40px;
+      position: relative;
+      z-index: 10;
+      perspective: 1000px;
+    }
+
+    .profile-container {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: float3d 6s ease-in-out infinite;
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      box-shadow: 
+        0 0 30px var(--neon-cyan),
+        inset 0 0 30px rgba(0, 255, 204, 0.3);
+      border: 3px solid var(--neon-cyan);
+      transform: translateZ(20px);
+      animation: rotate3d 20s linear infinite;
+    }
+
+    .profile-border {
+      position: absolute;
+      width: 110%;
+      height: 110%;
+      top: -5%;
+      left: -5%;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        var(--neon-pink),
+        var(--neon-purple),
+        var(--neon-blue),
+        var(--neon-cyan),
+        var(--neon-pink)
+      );
+      animation: rotate 4s linear infinite;
+      box-shadow: 0 0 40px rgba(255, 46, 99, 0.5);
+    }
+
+    .profile-border::before {
+      content: '';
+      position: absolute;
+      width: 94%;
+      height: 94%;
+      top: 3%;
+      left: 3%;
+      background: var(--dark-bg);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    @keyframes float3d {
+      0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(5deg); }
+      50% { transform: translateY(-20px) rotateX(-5deg) rotateY(-5deg); }
+    }
+
+    @keyframes rotate3d {
+      0% { transform: translateZ(20px) rotateY(0deg); }
+      100% { transform: translateZ(20px) rotateY(360deg); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+      position: relative;
+      z-index: 1;
+      margin-top: 80px;
+    }
+
+    /* Enhanced News Ticker */
+    .news-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      font-family: 'Orbitron', sans-serif;
+      background: rgba(10, 10, 20, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--neon-cyan);
+      box-shadow: 0 5px 30px rgba(0, 255, 204, 0.3);
+    }
+
+    .news-container .title {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40%;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+      padding: 12px 24px;
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+      z-index: 1001;
+      font-size: 1.1rem;
+      box-shadow: 0 0 20px rgba(255, 46, 99, 0.5);
+    }
+
+    .news-container .ticker {
+      width: 100%;
+      overflow: hidden;
+      margin-left: 40%;
+    }
+
+    .news-container ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 12px 0;
+      animation: scroll 25s infinite linear;
+    }
+
+    .news-container ul li {
+      white-space: nowrap;
+      padding: 0 30px;
+      color: var(--neon-cyan);
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-shadow: 0 0 10px var(--neon-cyan);
+      position: relative;
+    }
+
+    .news-container ul li::after {
+      content: "✦";
+      position: absolute;
+      top: 50%;
+      right: -5px;
+      transform: translateY(-50%);
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 40px;
+      background: var(--card-bg);
+      border: 2px solid var(--neon-cyan);
+      border-radius: 20px;
+      box-shadow: 
+        0 0 40px rgba(0, 255, 204, 0.4),
+        inset 0 0 40px rgba(0, 255, 204, 0.1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+      transition: all 0.5s ease;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(0, 255, 204, 0.1),
+        transparent
+      );
+      transform: rotate(45deg);
+      animation: shine 6s infinite;
+    }
+
+    .hero:hover {
+      transform: translateY(-10px) translateZ(10px);
+      box-shadow: 
+        0 15px 50px rgba(0, 255, 204, 0.6),
+        inset 0 0 50px rgba(0, 255, 204, 0.2);
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 46, 99, 0.5);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      font-weight: 900;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--neon-cyan);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      width: 100%;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 2px solid var(--neon-cyan);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.5s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 204, 0.1),
+        transparent
+      );
+      transition: left 0.7s ease;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-15px) translateZ(20px) rotateX(5deg);
+      box-shadow: 
+        0 20px 40px rgba(0, 255, 204, 0.4),
+        inset 0 0 30px rgba(0, 255, 204, 0.1);
+      border-color: var(--neon-pink);
+    }
+
+    .feature-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--neon-pink);
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px rgba(255, 46, 99, 0.5);
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      font-size: 1.1rem;
+      color: var(--neon-cyan);
+      flex-grow: 1;
+      line-height: 1.6;
+    }
+
+    .feature-card .btn {
+      width: 100%;
+      padding: 1.2em;
+      font-size: 1.1rem;
+      margin-top: auto;
+    }
+
+    /* About & Contact Sections */
+    .about, .contact {
+      background: var(--card-bg);
+      border: 2px solid var(--neon-cyan);
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.5s ease;
+    }
+
+    .about:hover, .contact:hover {
+      transform: translateY(-10px);
+      box-shadow: 
+        0 15px 40px rgba(0, 255, 204, 0.4),
+        inset 0 0 40px rgba(0, 255, 204, 0.1);
+    }
+
+    .about h2, .contact h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .about p, .contact p {
+      font-size: 1.2rem;
+      color: var(--neon-cyan);
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Buttons */
+    .btn {
+      background: transparent;
+      border: 2px solid var(--neon-cyan);
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 1em 1.5em;
+    }
+
+    .btn::before, .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.4), transparent);
+      transition: all 0.6s ease;
+    }
+
+    .btn::after {
+      left: 100%;
+      transition-delay: 0.2s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover::after {
+      left: -100%;
+    }
+
+    .btn:hover {
+      background: rgba(0, 255, 204, 0.15);
+      box-shadow: 
+        0 0 25px rgba(0, 255, 204, 0.7),
+        inset 0 0 15px rgba(0, 255, 204, 0.2);
+      color: #fff;
+      border-color: #fff;
+      transform: translateY(-3px);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      filter: brightness(1.2);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      padding: 30px;
+      background: var(--card-bg);
+      border: 2px solid var(--neon-cyan);
+      border-radius: 15px;
+      text-align: center;
+      color: var(--neon-cyan);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      text-shadow: 0 0 10px var(--neon-cyan);
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+
+    .footer b {
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px rgba(255, 46, 99, 0.5);
+    }
+
+    .footer .social-links {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer .social-links a {
+      color: var(--neon-cyan);
+      font-size: 2rem;
+      transition: all 0.4s ease;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--neon-cyan);
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+      margin: 0 auto;
+    }
+
+    .footer .social-links a:hover {
+      color: var(--neon-pink);
+      text-shadow: 0 0 15px var(--neon-pink);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 25px rgba(255, 46, 99, 0.7);
+      transform: translateY(-5px) scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+        margin-top: 100px;
+        gap: 40px;
+      }
+
+      .news-container .title {
+        width: 50%;
+        font-size: 0.9rem;
+        padding: 10px 15px;
+      }
+
+      .news-container .ticker {
+        margin-left: 50%;
+      }
+
+      .news-container ul li {
+        font-size: 0.9rem;
+        padding: 0 20px;
+      }
+
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .feature-card {
+        padding: 25px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+      }
+
+      .about, .contact {
+        padding: 30px 20px;
+      }
+
+      .about h2, .contact h2 {
+        font-size: 2rem;
+      }
+
+      .about p, .contact p {
+        font-size: 1.1rem;
+      }
+
+      .profile-container {
+        width: 160px;
+        height: 160px;
+      }
+
+      .footer .social-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .footer .social-links a {
+        width: 60px;
+        height: 60px;
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .profile-container {
+        width: 140px;
+        height: 140px;
+      }
+      
+      .btn {
+        font-size: 1rem;
+        padding: 0.9em 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Advanced Particle Background -->
+  <div id="particles-js"></div>
+  <div class="cyber-grid"></div>
+
+  <!-- Enhanced News Ticker -->
+  <div class="news-container">
+    <div class="title">🚀 LMK-MD Ultra Pro Max</div>
+    <div class="ticker">
+      <ul>
+        <li>Welcome to the Ultimate Session Experience!</li>
+        <li>Get your QR Codes & Pairing Codes Instantly</li>
+        <li>SHADOW DEVS - Premium Quality</li>
+        <li>Advanced Security & Lightning Fast Performance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 3D Profile Section -->
+    <div class="profile-section">
+      <div class="profile-container">
+        <div class="profile-border"></div>
+        <img src="https://i.ibb.co/0pqhfbFr/jawadmd.jpg" alt="Arslan-MD" class="profile-image">
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>ULTRA PRO MAX SESSIONS</h1>
+      <p>Experience the next generation of WhatsApp bot sessions. Get your QR or pair code, deploy LMK-AGENT002-MD-BOT with advanced features, and join the elite tech community!</p>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features">
+      <div class="feature-card">
+        <h3><i class="fas fa-qrcode"></i> QR Code Pairing</h3>
+        <p>Advanced QR code system with instant scanning and secure session ID generation. Lightning fast connection with enhanced security protocols.</p>
+        <button onclick="window.location.href='/qr'" class="btn">Get Premium QR</button>
+      </div>
+      <div class="feature-card">
+        <h3><i class="fas fa-key"></i> Pair Code System</h3>
+        <p>Enter your number and receive an encrypted pairing code. No scanning required. Advanced encryption ensures maximum security.</p>
+        <button onclick="window.location.href='/pair'" class="btn">Generate Code</button>
+      </div>
+      <div class="feature-card">
+        <h3><i class="fas fa-rocket"></i> Deploy LMK-MD</h3>
+        <p>One-click deployment with advanced features. Get your own bot running in minutes with premium functionality and 24/7 support.</p>
+        <button onclick="window.location.href='https://github.com/LMK360/LMK-AGENT002-MD-BOT'" class="btn">Deploy Now</button>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about">
+      <h2>About Ultra Pro Max</h2>
+      <p>Enjoy this whatsapp bot created by LMK-AGENT002 We will add new features that will better your experience.</p>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact">
+      <h2>Elite Support</h2>
+      <p>Our premium support team is available 24/7 to assist you with any issues. Contact us via SMS, WhatsApp, or Telegram for instant assistance with deployment, troubleshooting, or custom requests.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2026 LMK-AGENTOO2 Tech | Ultra Pro Max Edition</p>
+    <p>Contact <b>LMK-MD Official</b> for Premium Support</p>
+    <div class="social-links">
+      <a href="https://youtube.com/@lmkagent" target="_blank"><i class="fab fa-youtube"></i></a>
+      <a href="https://whatsapp.com/channel/0029Vb7LwaM7dmeTaTNO6Y2u" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://wa.me//0604707015" target="_blank"><i class="fab fa-wa.me"></i></a>
+      <a href="github.com/LMK360" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
+
+  <!-- Particle.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Advanced particle configuration
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 120, density: { enable: true, value_area: 800 } },
+        color: { value: ["#00ffcc", "#ff2e63", "#7209b7", "#4361ee"] },
+        shape: { 
+          type: ["circle", "triangle", "polygon"],
+          polygon: { nb_sides: 6 }
+        },
+        opacity: { 
+          value: 0.7, 
+          random: true,
+          anim: { enable: true, speed: 1, opacity_min: 0.2, sync: false }
+        },
+        size: { 
+          value: 3, 
+          random: true,
+          anim: { enable: true, speed: 4, size_min: 0.3, sync: false }
+        },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#00ffcc",
+          opacity: 0.4,
+          width: 1.5
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: "none",
+          random: true,
+          straight: false,
+          out_mode: "out",
+          bounce: false,
+          attract: { enable: true, rotateX: 600, rotateY: 1200 }
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+
+    // Add scroll animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe all feature cards and sections
+      document.querySelectorAll('.feature-card, .about, .contact, .hero').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(el);
+      });
+    });
+  </script>
+
+  <!-- GetButton.io widget -->
+  <script type="text/javascript">
+    (function () {
+      var options = {
+        sms: "27",
+        sms_color: "#129BF4",
+        whatsapp: "https://wa.me//0604707015",
+        youtube: "https://youtube.com/@lmkagent",
+        call_to_action: "Premium Support",
+        button_color: "#FF318E",
+        position: "left",
+        order: "sms,whatsapp,youtube",
+        pre_filled_message: "Hello LMK-AGENT Tech! I need assistance with the Ultra Pro Max version.",
+      };
+      var proto = 'https:', host = "getbutton.io", url = proto + '//static.' + host;
+      var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+      s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+      var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+  </script>
+</body>
+</html>
